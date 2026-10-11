@@ -7,7 +7,7 @@ Six Hermes profiles, all cloned from the authenticated `default` profile
 | Profile | Role | Codes features? | Can merge to main? | Notes |
 |---|---|---|---|---|
 | `sf-architect` | Software Architect | No (docs/stubs only) | No | Owns `docs/ARCHITECTURE.md`, `docs/DECISIONS.md`, module boundaries, shared contracts. |
-| `sf-backend` | Backend Developer | Yes | No | NestJS/Prisma target; existing code is Express/node-postgres — see open decision. |
+| `sf-backend` | Backend Developer | Yes | No | Express + node-postgres (decided stack, `docs/DECISIONS.md`) — no NestJS/Prisma. Gradually enforces modular boundaries within it. |
 | `sf-frontend` | Frontend Developer | Yes | No | React/TS/Vite UI, design-system components, forms. |
 | `sf-qa` | QA Engineer | Tests only | No | Reproduces bugs, writes regression tests, verifies fixes. |
 | `sf-reviewer` | Code Reviewer | No | No | Independent review: security, architecture fit, tests, acceptance criteria. Verdict only, never merges. |

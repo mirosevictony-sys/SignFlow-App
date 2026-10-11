@@ -11,9 +11,11 @@ _Last updated: 2026-10-12, by setup orchestration pass._
   `https://github.com/mirosevictony-sys/SignFlow-App` (private). `main`
   has one commit importing the existing scaffold. A `chore/setup` branch
   carries this documentation/agent-team setup — **not yet merged**.
-- **Open architectural question:** NestJS/Prisma vs. the existing
-  Express/node-postgres stack — see `docs/DECISIONS.md`. Nothing should
-  be built backend-side that assumes an answer until this is resolved.
+- **Architecture decision:** DECIDED 2026-10-12 — keep Express +
+  node-postgres, no NestJS/Prisma migration; modular monolith achieved
+  within the current stack. See `docs/DECISIONS.md`. All docs updated to
+  match (`AGENTS.md`, `docs/ARCHITECTURE.md`, `docs/ROADMAP.md`,
+  `docs/AGENT_TEAM.md`).
 - **Agent team:** six profiles created and configured (see
   `docs/AGENT_TEAM.md`). All authenticated, all scoped to this repo.
 - **Kanban:** board `signflow` created, empty, dispatch **disabled**
@@ -21,7 +23,6 @@ _Last updated: 2026-10-12, by setup orchestration pass._
 
 ## What still needs manual/human setup
 
-- Decide the NestJS/Prisma question (or defer it explicitly).
 - Review and merge (or request changes on) the `chore/setup` branch PR.
 - Approve flipping `kanban.dispatch_in_gateway` back to `true` once ready
   to let the orchestrator actually dispatch tasks.

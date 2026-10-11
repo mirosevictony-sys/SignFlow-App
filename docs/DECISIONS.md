@@ -16,7 +16,27 @@ Format: date, decision, reasoning, alternatives considered, status.
 - **Status:** Done. `main` now has one commit (`chore: import existing
   SignFlow scaffold`).
 
-## 2026-10-12 — OPEN: NestJS/Prisma vs. existing Express/node-postgres
+## 2026-10-12 — DECIDED: Keep Express/node-postgres; no NestJS/Prisma migration now
+
+- **Context:** Previously open — see history below. The agent-team setup
+  brief had assumed NestJS + Prisma as the target; the actual working
+  v0.1 scaffold is Express + raw `node-postgres` with hand-written SQL
+  migrations and already has 14 passing tests (`docs/VALIDATION.md`).
+- **Decision:** Keep the existing Express + node-postgres backend for
+  SignFlow v0.1. **Do not migrate to NestJS or Prisma at this stage.**
+  Maintain existing application functionality and gradually establish a
+  modular monolith *within* the current stack — i.e. enforce module
+  boundaries (routes/services/data access per domain area) in plain
+  TypeScript/Express, not via a framework swap.
+- **Reasoning:** The v0.1 prototype works and is tested; a framework
+  migration now would be pure risk with no product value. Modularity is
+  a code-organization property, not something that requires NestJS.
+- **Status:** Decided 2026-10-12 by the user. Superseded the "OPEN"
+  entry below, which is left for history. All docs referencing
+  NestJS/Prisma as current or near-term target have been corrected
+  (`AGENTS.md`, `docs/ROADMAP.md`, `docs/AGENT_TEAM.md`).
+
+## 2026-10-12 — (superseded) OPEN: NestJS/Prisma vs. existing Express/node-postgres
 
 - **Context:** The agent-team setup brief specifies NestJS + Prisma as
   the target backend stack. The actual existing scaffold
@@ -29,8 +49,8 @@ Format: date, decision, reasoning, alternatives considered, status.
      routes stay Express until ported, Prisma introduced alongside raw
      SQL migrations with a transition plan).
   3. Full rewrite onto NestJS/Prisma before further feature work.
-- **Status:** Not decided. Flagged for the user / sf-architect before any
-  backend module work starts — don't assume either direction.
+- **Status:** Superseded above — decision is (1), with "modular
+  monolith" achieved by organization, not by framework change.
 
 ## 2026-10-12 — Agent team and Kanban setup
 

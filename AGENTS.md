@@ -4,16 +4,16 @@ Shared instructions for every agent (human or AI) working in this repo.
 
 ## Project
 
-SignFlow is a sign-shop management platform. Target architecture: modular
-monolith, React + TypeScript + Vite frontend, NestJS backend, PostgreSQL via
-Prisma, Docker-based dev environment, GitHub Actions CI.
+SignFlow is a sign-shop management platform. Architecture: a **modular
+monolith on the existing stack** — React + TypeScript + Vite frontend,
+Express + node-postgres backend (decided 2026-10-12, see
+`docs/DECISIONS.md` — no NestJS/Prisma migration), PostgreSQL via raw SQL
+migrations, Docker-based dev environment, GitHub Actions CI.
 
-**Current reality (read before touching the backend):** the existing
-scaffold under `server/` is Express + raw `node-postgres` with hand-written
-SQL migrations (`server/migrations/`) — not NestJS/Prisma yet. This is an
-open architectural decision, not an oversight. See `docs/DECISIONS.md`
-("NestJS/Prisma migration") before starting backend work that assumes one
-or the other. Don't silently pick a side.
+"Modular monolith" here means enforcing module boundaries (routes,
+services, data access grouped per domain area) within the current
+Express/node-postgres code, not a framework swap. See
+`docs/ARCHITECTURE.md` for what's actually built.
 
 Full current-state docs: `docs/ARCHITECTURE.md`, `docs/FEATURES.md`,
 `docs/API.md`, `docs/VALIDATION.md` (pre-existing, authoritative for what's

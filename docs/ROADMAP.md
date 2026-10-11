@@ -6,12 +6,14 @@ phases. Each phase should land as small, reviewed, tested increments —
 not one big rewrite.
 
 ## Phase 0 — Foundations (current)
-- Resolve the NestJS/Prisma vs Express/node-postgres decision
-  (`docs/DECISIONS.md`).
+- ~~Resolve the NestJS/Prisma vs Express/node-postgres decision~~ —
+  **decided 2026-10-12: keep Express/node-postgres** (`docs/DECISIONS.md`).
 - Agent team, Kanban board, branching/worktree conventions (this setup).
 - Docker dev environment confirmed working end-to-end (currently
   unverified per `docs/VALIDATION.md`).
 - GitHub Actions CI: build + test on every PR.
+- Begin establishing modular boundaries within the existing Express app
+  (routes/services/data-access grouped per domain), incrementally.
 
 ## Phase 1 — Core platform and permissions
 - Company/user/role model hardening, full role matrix, session

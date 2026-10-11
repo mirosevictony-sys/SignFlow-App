@@ -67,12 +67,11 @@ Unit and API/domain tests run against PostgreSQL SQL implemented by PGlite. HTTP
 
 Optional WebMCP features expose a read-only production job list and a job-drawer navigation action. They share current UI data, expose no extra financial fields, validate input and clean up registrations. Unsupported browsers use the normal UI; supported-browser tool verification remains pending.
 
-## Target vs. current stack (added 2026-10-12)
+## Target vs. current stack (added 2026-10-12, decided 2026-10-12)
 
-The SignFlow program target is a modular monolith on NestJS + Prisma.
-This file's "Stack" section above describes what's actually built today:
-Express + raw `node-postgres` with hand-written SQL migrations. That gap
-is tracked as an open decision in `docs/DECISIONS.md` — don't treat
-either the target or the current stack as settled until that's resolved.
-See also `docs/ROADMAP.md` for planned modules and `docs/AGENT_TEAM.md`
-for who owns this document going forward (sf-architect).
+**Decided:** Express + node-postgres stays. No NestJS/Prisma migration.
+"Modular monolith" is achieved by enforcing domain boundaries within the
+current code, not by a framework change. See `docs/DECISIONS.md` for the
+full decision record. See `docs/ROADMAP.md` for planned modules and
+`docs/AGENT_TEAM.md` for who owns this document going forward
+(sf-architect).
