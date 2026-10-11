@@ -1,0 +1,39 @@
+name: signflow
+services:
+  app:
+    build: .
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:${APP_PORT:-3000}:3000"
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      PGHOST: db
+      PGPORT: 5432
+      PGDATABASE: signflow
+      PGUSER: signflow
+      PGPASSWORD: ${POSTGRES_PASSWORD:-signflow-local-demo}
+      ADMIN_EMAIL: ${ADMIN_EMAIL:-tony@signflow.local}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:-SignFlow-Demo-2026!}
+      OPERATOR_PASSWORD: ${OPERATOR_PASSWORD:-Operator-Demo-2026!}
+      SEED_DEMO: ${SEED_DEMO:-true}
+      COOKIE_SECURE: ${COOKIE_SECURE:-false}
+    depends_on:
+      db:
+        condition: service_healthy
+  db:
+    image: postgres:17-bookworm
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: signflow
+      POSTGRES_USER: signflow
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-signflow-local-demo}
+    volumes:
+      - signflow_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U signflow -d signflow"]
+      interval: 5s
+      timeout: 5s
+      retries: 15
+volumes:
+  signflow_data:
