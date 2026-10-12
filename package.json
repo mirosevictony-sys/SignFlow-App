@@ -13,7 +13,8 @@
     "start": "node dist/server/index.js",
     "test": "node --import tsx --test tests/*.test.ts",
     "seed": "node --import tsx server/seed-cli.ts",
-    "check": "tsc --noEmit -p tsconfig.json"
+    "check": "tsc --noEmit -p tsconfig.json",
+    "verify:pr": "node scripts/verify-pr-ci.mjs"
   },
   "dependencies": {
     "@radix-ui/react-dialog": "^1.1.15",
