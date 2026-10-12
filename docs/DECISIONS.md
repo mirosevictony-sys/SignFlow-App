@@ -65,3 +65,56 @@ Format: date, decision, reasoning, alternatives considered, status.
   until the human explicitly approves starting work.
 - **Status:** Done, pending human approval to flip `dispatch_in_gateway`
   back on.
+
+## 2026-10-12 — GitHub Free workflow with `local-only` Kanban completion contracts
+
+- **Context:** An earlier implementation card (CI workflow, PR #2) was
+  created with a PR-URL completion contract. Hermes' PR-acceptance gate
+  then refused completion because the repository has no
+  repository-required status checks (`main` is unprotected), so the card
+  could never finish. Rulesets and branch protection for private
+  repositories require GitHub Pro, and the project uses GitHub Free.
+  (Note: on 2026-10-12 GitHub reported the repository's visibility as
+  **public**, although earlier docs describe it as private. This workflow
+  works identically either way; visibility is the owner's decision and
+  agents never change it.)
+- **Decision:** All new SignFlow Kanban cards use
+  `completion_contract: local-only`. Branches, pull requests and GitHub
+  Actions are used exactly as before; GitHub-side enforcement is replaced
+  by (a) a Kanban dependency chain impl → QA → review → approval, (b) QA
+  independently verifying CI with `scripts/verify-pr-ci.mjs`, and (c) a
+  human performing every merge.
+- **Alternatives considered:** (1) PR/`OWNER/REPO` contracts plus required
+  checks — needs branch protection (Pro for private repos); (2) trusting
+  worker-reported test results — rejected, unverifiable; (3) GitHub Pro —
+  out of scope by the user's instruction.
+- **Consequence:** A completed `local-only` card is never, by itself,
+  approval. Existing cards keep their contracts (contracts are immutable
+  after creation and the database is never edited directly).
+- **Status:** Adopted.
+
+## 2026-10-12 — Deterministic, read-only CI verifier
+
+- **Decision:** Add `scripts/verify-pr-ci.mjs` (Node, no new
+  dependencies). Given a PR number it reads PR metadata and check runs via
+  `gh api` GET calls only, requires a `build-and-test` check run from the
+  `github-actions` app on the PR's **exact current head SHA** with
+  conclusion `success`, re-reads the PR to detect a moved head, optionally
+  requires `--expect-sha`, prints machine-readable JSON and exits non-zero
+  on any missing, pending, failed, foreign or stale evidence. Its decision
+  logic is unit-tested in `tests/verify-pr-ci.test.ts`.
+- **Reasoning:** Gives QA a reproducible check that does not depend on PR
+  text or agent claims, and works without required checks.
+- **Status:** Adopted. Verified against PR #2 (pass) and PRs #1/#3 (fail:
+  no `build-and-test` run on their heads) on 2026-10-12.
+
+## 2026-10-12 — Bounded execution limits
+
+- **Decision:** `max_in_progress=1`, `max_in_progress_per_profile=1`,
+  `failure_limit=2`, `auto_decompose=false`, `auto_promote_children=false`,
+  dispatch off by default, `max_runtime_seconds=2700` per card, and at most
+  two correction rounds per feature before a human decides. The
+  orchestrator profile has its `cronjob` toolset disabled.
+- **Reasoning:** Prevents unbounded autonomous loops and spend; keeps
+  every change small enough for a human to review.
+- **Status:** Adopted.

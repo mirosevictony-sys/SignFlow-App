@@ -9,9 +9,16 @@ not one big rewrite.
 - ~~Resolve the NestJS/Prisma vs Express/node-postgres decision~~ —
   **decided 2026-10-12: keep Express/node-postgres** (`docs/DECISIONS.md`).
 - Agent team, Kanban board, branching/worktree conventions (this setup).
+- Multi-agent GitHub Free workflow: `local-only` Kanban contracts,
+  impl → QA → review → approval chain, `scripts/verify-pr-ci.mjs`
+  (setup PR, 2026-10-12 — pending human merge).
 - Docker dev environment confirmed working end-to-end (currently
   unverified per `docs/VALIDATION.md`).
-- GitHub Actions CI: build + test on every PR.
+- GitHub Actions CI: build + test on every PR (workflow in PR #2, CI green
+  on its head commit — pending human merge).
+- First pipeline run end-to-end with a small real task (see
+  `docs/HANDOFF.md`, "Suggested first task") once the above PRs are merged
+  and dispatch is enabled.
 - Begin establishing modular boundaries within the existing Express app
   (routes/services/data-access grouped per domain), incrementally.
 

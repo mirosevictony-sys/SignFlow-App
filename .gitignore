@@ -5,3 +5,5 @@ dist/
 *.log
 .sites-runtime/
 backups/
+# Kanban task worktrees (hermes kanban workspace=worktree)
+.worktrees/
