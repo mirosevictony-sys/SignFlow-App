@@ -66,3 +66,12 @@ Compose exposes only a loopback app port; database traffic stays inside the Comp
 Unit and API/domain tests run against PostgreSQL SQL implemented by PGlite. HTTP objects are simulated, so these tests do not substitute for a native PostgreSQL/Docker network smoke test. Persistence is verified with a temporary on-disk database across close/reopen. Production compilation passes. Browser visual QA and Docker execution remain unverified in this environment.
 
 Optional WebMCP features expose a read-only production job list and a job-drawer navigation action. They share current UI data, expose no extra financial fields, validate input and clean up registrations. Unsupported browsers use the normal UI; supported-browser tool verification remains pending.
+
+## Target vs. current stack (added 2026-10-12, decided 2026-10-12)
+
+**Decided:** Express + node-postgres stays. No NestJS/Prisma migration.
+"Modular monolith" is achieved by enforcing domain boundaries within the
+current code, not by a framework change. See `docs/DECISIONS.md` for the
+full decision record. See `docs/ROADMAP.md` for planned modules and
+`docs/AGENT_TEAM.md` for who owns this document going forward
+(sf-architect).
